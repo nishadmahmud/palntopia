@@ -245,4 +245,26 @@ document.addEventListener('DOMContentLoaded', function() {
             nav.classList.remove('scrolled');
         }
     });
+
+    // Update cart count across all pages
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartCountElements = document.querySelectorAll('#cart-count');
+        const count = cart.reduce((total, item) => total + item.quantity, 0);
+        cartCountElements.forEach(element => {
+            element.textContent = count;
+        });
+    }
+
+    // Listen for cart updates
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'cart') {
+            updateCartCount();
+        }
+    });
+
+    // Initialize cart count on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCartCount();
+    });
 }); 

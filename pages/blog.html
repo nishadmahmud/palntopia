@@ -12,9 +12,76 @@
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
     <link rel="manifest" href="../favicon_io/site.webmanifest">
+    <style>
+        /* Glassmorphism Navigation */
+        nav {
+            background-color: rgba(47, 82, 51, 0.85); /* Using primary color with alpha */
+            @apply backdrop-blur-md sticky top-0 z-50;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Add subtle border for better glass effect */
+        nav::before {
+            content: '';
+            @apply absolute inset-0 border-b;
+            border-color: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+        }
+
+        /* Mobile menu glass effect */
+        #mobile-menu {
+            background-color: rgba(47, 82, 51, 0.9);
+            @apply backdrop-blur-lg;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
 </head>
 <body class="font-poppins bg-gray-50">
-    <!-- Include navigation -->
+    <nav>
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="../index.html" class="text-2xl font-bold text-white/90">Plantopia</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden focus:outline-none" id="mobile-menu-button">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+                <div class="hidden md:flex space-x-6">
+                    <a href="../index.html" class="text-white hover:text-accent transition-colors">Home</a>
+                    <a href="products.html" class="text-white hover:text-accent transition-colors">Products</a>
+                    <a href="blog.html" class="text-white hover:text-accent transition-colors">Blog</a>
+                    <a href="about.html" class="text-white hover:text-accent transition-colors">About</a>
+                    <a href="contact.html" class="text-white hover:text-accent transition-colors">Contact</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#" class="hover:text-accent"><i class="fas fa-search"></i></a>
+                    <a href="#" class="hover:text-accent"><i class="fas fa-user"></i></a>
+                    <div class="relative">
+                        <a href="cart.html" class="hover:text-accent">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="absolute -top-2 -right-2 bg-accent text-white text-xs w-5 h-5 flex items-center justify-center rounded-full" id="cart-count">0</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="py-4 space-y-4">
+                    <a href="../index.html" class="block hover:text-accent">Home</a>
+                    <a href="products.html" class="block hover:text-accent">Products</a>
+                    <a href="blog.html" class="block hover:text-accent">Blog</a>
+                    <a href="about.html" class="block hover:text-accent">About</a>
+                    <a href="contact.html" class="block hover:text-accent">Contact</a>
+                    <div class="flex space-x-4 pt-4 border-t border-gray-700">
+                        <a href="#" class="hover:text-accent"><i class="fas fa-search"></i></a>
+                        <a href="#" class="hover:text-accent"><i class="fas fa-user"></i></a>
+                        <a href="cart.html" class="hover:text-accent"><i class="fas fa-shopping-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
 
     <!-- Blog Hero Section -->
     <section class="relative h-[400px] overflow-hidden">
@@ -111,5 +178,20 @@
 
     <!-- Include footer -->
     <script src="../js/main.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Initialize cart count
+        document.addEventListener('DOMContentLoaded', function() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = document.getElementById('cart-count');
+            if (cartCount) {
+                cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+            }
+        });
+    </script>
 </body>
 </html> 
