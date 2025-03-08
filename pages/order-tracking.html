@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order - Plantopia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../favicon_io/site.webmanifest">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2F5233',
+                        secondary: '#4F7942',
+                        accent: '#98BA7D',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-poppins bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-primary text-white">
+        <!-- ... navigation content ... -->
+    </nav>
+
+    <!-- Order Tracking Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-3xl font-bold mb-8">Track Your Order</h1>
+
+                <!-- Order Search -->
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+                    <form id="tracking-form" class="flex gap-4">
+                        <input type="text" placeholder="Enter Order Number" class="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent">
+                        <button type="submit" class="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-accent transition">
+                            Track
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Order Status -->
+                <div id="order-status" class="bg-white rounded-lg shadow-sm p-6 hidden">
+                    <div class="mb-8">
+                        <h2 class="text-xl font-semibold mb-4">Order Status</h2>
+                        <div class="relative">
+                            <div class="absolute left-0 top-5 h-0.5 w-full bg-gray-200"></div>
+                            <div class="relative flex justify-between">
+                                <div class="status-step">
+                                    <div class="w-10 h-10 bg-secondary text-white rounded-full flex items-center justify-center mb-2">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <p class="text-sm">Order Placed</p>
+                                </div>
+                                <div class="status-step">
+                                    <div class="w-10 h-10 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center mb-2">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                    <p class="text-sm">Processing</p>
+                                </div>
+                                <div class="status-step">
+                                    <div class="w-10 h-10 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center mb-2">
+                                        <i class="fas fa-truck"></i>
+                                    </div>
+                                    <p class="text-sm">Shipped</p>
+                                </div>
+                                <div class="status-step">
+                                    <div class="w-10 h-10 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center mb-2">
+                                        <i class="fas fa-home"></i>
+                                    </div>
+                                    <p class="text-sm">Delivered</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <span class="font-medium">Estimated Delivery:</span>
+                            <span id="delivery-date"></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="font-medium">Current Location:</span>
+                            <span id="current-location"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-8">
+        <!-- ... footer content ... -->
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/order-tracking.js"></script>
+</body>
+</html> 

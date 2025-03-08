@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Plantopia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../favicon_io/site.webmanifest">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2F5233',
+                        secondary: '#4F7942',
+                        accent: '#98BA7D',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-poppins bg-gray-50">
+    <!-- Navigation (same as other pages) -->
+    <nav class="bg-primary text-white">
+        <!-- ... navigation content ... -->
+    </nav>
+
+    <!-- Cart Section -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold mb-8">Shopping Cart</h1>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Cart Items -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-lg shadow-sm" id="cart-items">
+                        <!-- Cart items will be dynamically added here -->
+                        <div class="p-6 text-center text-gray-500" id="empty-cart-message">
+                            Your cart is empty. <a href="/pages/products.html" class="text-secondary hover:text-accent">Continue shopping</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex justify-between">
+                                <span>Subtotal</span>
+                                <span id="subtotal">TK 0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Shipping</span>
+                                <span id="shipping">TK 0</span>
+                            </div>
+                            <div class="border-t pt-3 font-semibold">
+                                <div class="flex justify-between">
+                                    <span>Total</span>
+                                    <span id="total">TK 0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Promo Code -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium mb-2">Promo Code</label>
+                            <div class="flex">
+                                <input type="text" class="flex-1 border rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent" placeholder="Enter code">
+                                <button class="bg-secondary text-white px-4 py-2 rounded-r-lg hover:bg-accent transition">
+                                    Apply
+                                </button>
+                            </div>
+                        </div>
+
+                        <a href="/pages/checkout.html" class="block text-center w-full bg-secondary hover:bg-accent text-white py-3 rounded-lg transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed" id="checkout-btn">
+                            Proceed to Checkout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-8">
+        <!-- ... footer content ... -->
+    </footer>
+
+    <!-- Cart Item Template -->
+    <template id="cart-item-template">
+        <div class="border-b last:border-b-0 p-6 cart-item" data-id="">
+            <div class="flex items-center gap-4">
+                <img src="" alt="" class="w-24 h-24 object-cover rounded-lg">
+                <div class="flex-1">
+                    <h3 class="font-semibold"></h3>
+                    <p class="text-gray-600 text-sm"></p>
+                    <div class="flex items-center gap-4 mt-2">
+                        <div class="flex items-center border rounded-lg">
+                            <button class="px-3 py-1 text-gray-600 hover:text-primary decrease-quantity">-</button>
+                            <input type="number" class="w-12 text-center border-x py-1 quantity-input" value="1" min="1">
+                            <button class="px-3 py-1 text-gray-600 hover:text-primary increase-quantity">+</button>
+                        </div>
+                        <button class="text-red-500 hover:text-red-600 remove-item">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="font-semibold item-price"></span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/cart.js"></script>
+</body>
+</html> 

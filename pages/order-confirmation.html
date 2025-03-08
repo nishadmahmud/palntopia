@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Plantopia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../favicon_io/site.webmanifest">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2F5233',
+                        secondary: '#4F7942',
+                        accent: '#98BA7D',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-poppins bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-primary text-white">
+        <!-- ... navigation content ... -->
+    </nav>
+
+    <!-- Order Confirmation Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto text-center mb-12">
+                <div class="mb-8">
+                    <i class="fas fa-check-circle text-6xl text-secondary"></i>
+                </div>
+                <h1 class="text-3xl font-bold mb-4">Thank You for Your Order!</h1>
+                <p class="text-gray-600 mb-8">Your order has been placed successfully. We'll send you an email confirmation shortly.</p>
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+                    <h2 class="text-xl font-semibold mb-4">Order Details</h2>
+                    <div class="text-left space-y-2">
+                        <p><span class="font-medium">Order Number:</span> <span id="order-number"></span></p>
+                        <p><span class="font-medium">Order Date:</span> <span id="order-date"></span></p>
+                        <p><span class="font-medium">Payment Method:</span> <span id="payment-method"></span></p>
+                        <p><span class="font-medium">Total Amount:</span> <span id="order-total"></span></p>
+                    </div>
+                </div>
+                <div class="space-x-4">
+                    <a href="/pages/order-tracking.html" class="inline-block bg-secondary text-white px-6 py-3 rounded-lg hover:bg-accent transition">
+                        Track Order
+                    </a>
+                    <a href="/" class="inline-block bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition">
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-8">
+        <!-- ... footer content ... -->
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/order-confirmation.js"></script>
+</body>
+</html> 

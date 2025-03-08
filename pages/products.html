@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Plantopia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../favicon_io/site.webmanifest">
+   <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2F5233',
+                        secondary: '#4F7942',
+                        accent: '#98BA7D',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Grid View (default) */
+        .products-container.grid-view {
+            @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+        }
+        
+        /* List View */
+        .products-container.list-view {
+            @apply grid grid-cols-1 gap-6;
+        }
+        
+        .products-container.list-view .product-card {
+            @apply flex items-start transition-all duration-300;
+        }
+        
+        .products-container.list-view .product-card img {
+            @apply w-48 h-48 object-cover flex-shrink-0 transition-all duration-300;
+        }
+        
+        .products-container.list-view .product-card .product-info {
+            @apply flex-1 p-6 flex flex-col;
+        }
+        
+        .products-container.list-view .product-card .product-description {
+            @apply block mt-2 mb-4;
+            display: block !important;
+        }
+        
+        /* Grid View specific styles */
+        .products-container.grid-view .product-card {
+            @apply flex flex-col transition-all duration-300;
+        }
+        
+        .products-container.grid-view .product-card img {
+            @apply w-full h-64 transition-all duration-300;
+        }
+        
+        /* Hide description in grid view */
+        .products-container.grid-view .product-description {
+            display: none !important;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .products-container.list-view .product-card {
+                @apply flex-col;
+            }
+            
+            .products-container.list-view .product-card img {
+                @apply w-full h-64;
+            }
+        }
+        
+        .cart-count {
+            @apply absolute -top-2 -right-2 bg-accent text-white text-xs w-5 h-5 rounded-full flex items-center justify-center;
+        }
+
+        /* Price Range Slider */
+        input[type="range"] {
+            -webkit-appearance: none;
+            height: 2px;
+            background: transparent;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #4F7942;
+            cursor: pointer;
+            margin-top: -7px;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #4F7942;
+            cursor: pointer;
+            border: none;
+        }
+
+        input[type="range"]:focus {
+            outline: none;
+        }
+
+        /* Mobile Filter Sidebar */
+        @media (max-width: 1024px) {
+            .filter-sidebar {
+                @apply transform -translate-x-full transition-all duration-300 ease-in-out;
+            }
+            
+            .filter-sidebar.open {
+                @apply translate-x-0;
+            }
+            
+            body.filter-open {
+                @apply overflow-hidden;
+            }
+
+            .filter-sidebar #filter-overlay {
+                @apply opacity-0 invisible transition-all duration-300;
+            }
+
+            .filter-sidebar.open #filter-overlay {
+                @apply opacity-100 visible;
+            }
+        }
+
+        /* Search Transitions */
+        .product-card {
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .product-card.opacity-0 {
+            opacity: 0;
+        }
+
+        /* Search Input Focus */
+        #search-input:focus {
+            @apply ring-2 ring-secondary border-transparent;
+        }
+
+        /* Search Clear Button Hover */
+        #search-input + button:hover {
+            @apply text-gray-600;
+        }
+    </style>
+</head>
+<body class="font-poppins bg-gray-50">
+    <!-- Navigation (same as index.html) -->
+    <nav class="bg-primary text-white">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold">Plantopia</h1>
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="/" class="hover:text-accent">Home</a>
+                    <a href="/pages/products.html" class="hover:text-accent">Products</a>
+                    <a href="/pages/about.html" class="hover:text-accent">About</a>
+                    <a href="/pages/contact.html" class="hover:text-accent">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="hover:text-accent"><i class="fas fa-search"></i></a>
+                    <a href="#" class="hover:text-accent"><i class="fas fa-user"></i></a>
+                    <div class="relative">
+                        <a href="/pages/cart.html" class="hover:text-accent relative">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count hidden">0</span>
+                        </a>
+                        <!-- Mini Cart Preview -->
+                        <div id="mini-cart" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg z-50">
+                            <div class="p-4">
+                                <h3 class="text-gray-800 font-medium mb-3">Shopping Cart</h3>
+                                <div id="mini-cart-items" class="space-y-3 max-h-60 overflow-y-auto">
+                                    <!-- Mini cart items will be added here -->
+                                </div>
+                                <div class="border-t mt-3 pt-3">
+                                    <div class="flex justify-between text-gray-800 font-medium mb-3">
+                                        <span>Total:</span>
+                                        <span id="mini-cart-total">TK 0</span>
+                                    </div>
+                                    <a href="/pages/cart.html" class="block text-center bg-secondary text-white px-4 py-2 rounded-lg hover:bg-accent transition">
+                                        View Cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Products Header -->
+    <header class="bg-white py-8">
+        <div class="container mx-auto px-4">
+            <!-- Search Bar -->
+            <div class="max-w-xl mx-auto mb-8">
+                <div class="relative">
+                    <input type="text" 
+                           id="search-input" 
+                           class="w-full pl-12 pr-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-secondary" 
+                           placeholder="Search products...">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <h1 class="text-4xl font-bold text-primary">Our Products</h1>
+            <div class="flex items-center mt-4">
+                <nav class="text-gray-500" aria-label="Breadcrumb">
+                    <ol class="flex items-center space-x-2">
+                        <li><a href="/" class="hover:text-primary">Home</a></li>
+                        <li><span class="mx-2">/</span></li>
+                        <li class="text-primary">Products</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Filter and Products Section -->
+    <section class="container mx-auto px-4 py-8">
+        <!-- Mobile Filter Toggle -->
+        <div class="lg:hidden mb-4">
+            <button id="filter-toggle" class="w-full bg-white p-3 rounded-lg shadow-sm flex justify-between items-center">
+                <span class="font-medium">Filters</span>
+                <i class="fas fa-filter"></i>
+            </button>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Filters Sidebar -->
+            <div class="filter-sidebar fixed lg:relative w-full lg:w-1/4 inset-0 lg:inset-auto z-[1000] lg:z-0 -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+                <!-- Dark Overlay (mobile only) -->
+                <div class="fixed inset-0 bg-black opacity-50 lg:hidden hidden" id="filter-overlay"></div>
+                
+                <!-- Sidebar Content -->
+                <div class="absolute lg:relative left-0 h-full w-[280px] lg:w-auto bg-white overflow-y-auto z-[1001] lg:z-0">
+                    <div class="p-6">
+                        <!-- Mobile Close Button -->
+                        <div class="flex justify-between items-center lg:hidden mb-4">
+                            <h2 class="text-xl font-semibold">Filters</h2>
+                            <button id="close-filters" class="text-gray-500 hover:text-gray-700">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="lg:space-y-6">
+                            <!-- Categories -->
+                            <div class="mb-6 lg:mb-0">
+                                <h3 class="font-medium mb-3">Categories</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="filter-checkbox" value="indoor-plants" data-category="Indoor Plants">
+                                        <span class="ml-2">Indoor Plants</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox text-secondary">
+                                        <span class="ml-2">Planters & Pots</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox text-secondary">
+                                        <span class="ml-2">Gardening Supplies</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox text-secondary">
+                                        <span class="ml-2">Plant Care Tools</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Price Range -->
+                            <div class="mb-6 lg:mb-0">
+                                <h3 class="font-medium mb-3">Price Range</h3>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between text-sm text-gray-600">
+                                        <span>TK 0</span>
+                                        <span id="price-value">TK 10,000</span>
+                                    </div>
+                                    <div class="relative">
+                                        <div class="absolute h-2 bg-gray-200 inset-x-0 top-1/2 -translate-y-1/2 rounded"></div>
+                                        <input type="range" 
+                                               id="price-range"
+                                               min="0" 
+                                               max="10000" 
+                                               step="500" 
+                                               value="10000"
+                                               class="relative w-full h-2 bg-transparent appearance-none cursor-pointer">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Plant Size -->
+                            <div class="mb-6">
+                                <h3 class="font-medium mb-3">Plant Size</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox text-secondary">
+                                        <span class="ml-2">Small</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox text-secondary">
+                                        <span class="ml-2">Medium</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox text-secondary">
+                                        <span class="ml-2">Large</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="lg:w-3/4">
+                <!-- Sort and View Options -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div class="flex items-center space-x-4">
+                        <span id="product-count" class="text-gray-600">0 products</span>
+                        <select id="sort-select" class="border rounded-lg px-4 py-2">
+                            <option value="featured">Sort by: Featured</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="newest">Newest First</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-gray-600">View:</span>
+                        <button class="p-2 hover:text-secondary text-secondary" data-view="grid"><i class="fas fa-th-large"></i></button>
+                        <button class="p-2 hover:text-secondary" data-view="list"><i class="fas fa-list"></i></button>
+                    </div>
+                </div>
+
+                <!-- Active Filters -->
+                <div id="active-filters" class="flex flex-wrap gap-2 mb-6">
+                    <!-- Filter tags will be added here dynamically -->
+                </div>
+
+                <!-- Products -->
+                <div class="products-container grid-view grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Product Card -->
+                    <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden"
+                         data-id="1"
+                         data-name="Snake Plant"
+                         data-price="2999"
+                         data-category="indoor-plants"
+                         data-date="20240315"
+                         data-description="Perfect for beginners, the Snake Plant is known for its air-purifying qualities and ability to thrive in low-light conditions."
+                         data-care="Low maintenance, water every 2-3 weeks"
+                         data-image="../images/plant (1).png">
+                        <div class="relative">
+                            <img src="../images/plant (1).png" alt="Snake Plant" class="w-full h-64 object-cover transition-all duration-300">
+                            <button class="quick-view-btn absolute top-4 right-4 bg-white bg-opacity-90 p-2 rounded-full hover:bg-secondary hover:text-white transition">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="product-info p-4">
+                            <h3 class="text-lg font-semibold">Snake Plant</h3>
+                            <p class="text-gray-600 text-sm mb-2">Low maintenance beauty</p>
+                            <p class="product-description text-gray-600 text-sm mb-4">
+                                Perfect for beginners, the Snake Plant is known for its air-purifying qualities and ability to thrive in low-light conditions.
+                            </p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary font-bold">TK 2,999</span>
+                                <button class="add-to-cart-btn bg-secondary text-white px-4 py-2 rounded-lg hover:bg-accent transition">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 2 -->
+                    <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden"
+                         data-id="2"
+                         data-name="Peace Lily"
+                         data-price="3499"
+                         data-category="indoor-plants"
+                         data-date="20240315"
+                         data-image="../images/plant (2).png">
+                        <img src="../images/plant (2).png" alt="Peace Lily" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold">Peace Lily</h3>
+                            <p class="text-gray-600 text-sm mb-2">Air purifying beauty</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary font-bold">TK 3,499</span>
+                                <button class="add-to-cart-btn bg-secondary text-white px-4 py-2 rounded-lg hover:bg-accent transition">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 3 -->
+                    <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden"
+                         data-id="3"
+                         data-name="Ceramic Pot"
+                         data-price="2499"
+                         data-category="planters-pots"
+                         data-date="20240315"
+                         data-image="../images/plant (3).png">
+                        <img src="../images/plant (3).png" alt="Ceramic Pot" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold">Ceramic Planter</h3>
+                            <p class="text-gray-600 text-sm mb-2">Modern minimalist design</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary font-bold">TK 2,499</span>
+                                <button class="add-to-cart-btn bg-secondary text-white px-4 py-2 rounded-lg hover:bg-accent transition">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 4 -->
+                    <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden"
+                         data-id="4"
+                         data-name="Premium Potting Soil"
+                         data-price="1999"
+                         data-category="gardening-supplies"
+                         data-date="20240315"
+                         data-image="../images/plant (4).png">
+                        <img src="../images/plant (4).png" alt="Potting Soil" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold">Premium Potting Soil</h3>
+                            <p class="text-gray-600 text-sm mb-2">Enriched with nutrients</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary font-bold">TK 1,999</span>
+                                <button class="add-to-cart-btn bg-secondary text-white px-4 py-2 rounded-lg hover:bg-accent transition">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 5 -->
+                    <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden"
+                         data-id="5"
+                         data-name="Watering Can"
+                         data-price="2299"
+                         data-category="plant-care-tools"
+                         data-date="20240315"
+                         data-image="../images/plant (5).png">
+                        <img src="../images/plant (5).png" alt="Watering Can" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold">Watering Can</h3>
+                            <p class="text-gray-600 text-sm mb-2">Elegant design with precise pour</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary font-bold">TK 2,299</span>
+                                <button class="add-to-cart-btn bg-secondary text-white px-4 py-2 rounded-lg hover:bg-accent transition">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Card 6 -->
+                    <div class="product-card bg-white rounded-lg shadow-sm overflow-hidden"
+                         data-id="6"
+                         data-name="Macrame Hanging Planter"
+                         data-price="3999"
+                         data-category="planters-pots"
+                         data-date="20240315"
+                         data-image="../images/plant (6).png">
+                        <img src="../images/plant (6).png" alt="Hanging Planter" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold">Macrame Hanging Planter</h3>
+                            <p class="text-gray-600 text-sm mb-2">Handcrafted beauty</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary font-bold">TK 3,999</span>
+                                <button class="add-to-cart-btn bg-secondary text-white px-4 py-2 rounded-lg hover:bg-accent transition">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="mt-8 flex justify-center">
+                    <nav class="flex items-center space-x-2">
+                        <button class="px-3 py-2 rounded-lg border hover:bg-secondary hover:text-white">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="px-4 py-2 rounded-lg border bg-secondary text-white">1</button>
+                        <button class="px-4 py-2 rounded-lg border hover:bg-secondary hover:text-white">2</button>
+                        <button class="px-4 py-2 rounded-lg border hover:bg-secondary hover:text-white">3</button>
+                        <button class="px-3 py-2 rounded-lg border hover:bg-secondary hover:text-white">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (same as index.html) -->
+    <footer class="bg-primary text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Plantopia</h3>
+                    <p class="text-sm">Your one-stop shop for all indoor plants and accessories.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/products.js"></script>
+</body>
+</html> 

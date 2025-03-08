@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monstera Deliciosa - Plantopia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../favicon_io/site.webmanifest">
+   <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2F5233',
+                        secondary: '#4F7942',
+                        accent: '#98BA7D',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-poppins bg-gray-50">
+    <!-- Navigation (same as other pages) -->
+    <nav class="bg-primary text-white">
+        <!-- ... navigation content ... -->
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white py-4 border-b">
+        <div class="container mx-auto px-4">
+            <nav class="text-gray-500" aria-label="Breadcrumb">
+                <ol class="flex items-center space-x-2">
+                    <li><a href="/" class="hover:text-primary">Home</a></li>
+                    <li><span class="mx-2">/</span></li>
+                    <li><a href="/pages/products.html" class="hover:text-primary">Products</a></li>
+                    <li><span class="mx-2">/</span></li>
+                    <li class="text-primary">Monstera Deliciosa</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Product Detail Section -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Product Images -->
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg">
+                        <img src="../images/plant (5).png" alt="Monstera Deliciosa" class="w-full h-[500px] object-cover rounded-lg">
+                    </div>
+                    <div class="grid grid-cols-4 gap-4">
+                        <button class="bg-white p-2 rounded-lg border-2 border-accent">
+                            <img src="../images/plant (5).png" alt="Thumbnail 1" class="w-full h-20 object-cover rounded-lg">
+                        </button>
+                        <!-- Add more thumbnail images -->
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="space-y-6">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800">Monstera Deliciosa</h1>
+                        <p class="text-xl text-primary font-bold mt-2">TK 4,999</p>
+                    </div>
+
+                    <!-- Product Description -->
+                    <div class="space-y-4">
+                        <p class="text-gray-600">The Monstera Deliciosa, also known as the Swiss Cheese Plant, is famous for its stunning split leaves and tropical appearance. This easy-care plant is perfect for adding a dramatic touch to any room.</p>
+                        
+                        <!-- Plant Details -->
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div class="space-y-2">
+                                <p><span class="font-semibold">Light:</span> Bright indirect light</p>
+                                <p><span class="font-semibold">Water:</span> Weekly, when top soil is dry</p>
+                                <p><span class="font-semibold">Height:</span> 60-80 cm</p>
+                            </div>
+                            <div class="space-y-2">
+                                <p><span class="font-semibold">Difficulty:</span> Easy</p>
+                                <p><span class="font-semibold">Pet Friendly:</span> No</p>
+                                <p><span class="font-semibold">Air Purifying:</span> Yes</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add to Cart Section -->
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center border rounded-lg">
+                                <button class="px-4 py-2 text-gray-600 hover:text-primary" onclick="decrementQuantity()">-</button>
+                                <input type="number" id="quantity" value="1" min="1" class="w-16 text-center border-x py-2">
+                                <button class="px-4 py-2 text-gray-600 hover:text-primary" onclick="incrementQuantity()">+</button>
+                            </div>
+                            <button class="bg-secondary hover:bg-accent text-white px-8 py-3 rounded-lg transition duration-300 flex-grow">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <button class="border border-secondary text-secondary hover:bg-secondary hover:text-white px-8 py-3 rounded-lg transition duration-300 w-full">
+                            Add to Wishlist
+                        </button>
+                    </div>
+
+                    <!-- Additional Information -->
+                    <div class="border-t pt-6 space-y-4">
+                        <div class="flex items-center space-x-2 text-sm">
+                            <i class="fas fa-truck text-secondary"></i>
+                            <span>Free delivery for orders over TK 10,000</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-sm">
+                            <i class="fas fa-shield-alt text-secondary"></i>
+                            <span>30-day return policy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Care Instructions -->
+            <div class="mt-16">
+                <h2 class="text-2xl font-bold mb-6">Plant Care Instructions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <i class="fas fa-sun text-3xl text-secondary mb-4"></i>
+                        <h3 class="font-semibold mb-2">Light Requirements</h3>
+                        <p class="text-gray-600">Place in bright, indirect sunlight. Avoid direct sun as it may burn the leaves.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <i class="fas fa-tint text-3xl text-secondary mb-4"></i>
+                        <h3 class="font-semibold mb-2">Watering Schedule</h3>
+                        <p class="text-gray-600">Water when the top 2-3 inches of soil feels dry. Reduce watering in winter.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <i class="fas fa-thermometer-half text-3xl text-secondary mb-4"></i>
+                        <h3 class="font-semibold mb-2">Temperature & Humidity</h3>
+                        <p class="text-gray-600">Prefers temperatures between 18-30°C and high humidity levels.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-bold mb-8">You May Also Like</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Related Product Cards -->
+                <!-- Add 4 related product cards here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-8">
+        <!-- ... footer content ... -->
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        function incrementQuantity() {
+            const input = document.getElementById('quantity');
+            input.value = parseInt(input.value) + 1;
+        }
+
+        function decrementQuantity() {
+            const input = document.getElementById('quantity');
+            if (parseInt(input.value) > 1) {
+                input.value = parseInt(input.value) - 1;
+            }
+        }
+
+        // Image gallery functionality
+        const mainImage = document.querySelector('.product-image-main');
+        const thumbnails = document.querySelectorAll('.product-image-thumb');
+
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener('click', function() {
+                mainImage.src = this.src;
+                thumbnails.forEach(t => t.parentElement.classList.remove('border-accent'));
+                this.parentElement.classList.add('border-accent');
+            });
+        });
+    </script>
+</body>
+</html> 

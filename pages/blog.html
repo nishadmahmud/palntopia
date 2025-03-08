@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Plantopia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Include head content -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../favicon_io/site.webmanifest">
+</head>
+<body class="font-poppins bg-gray-50">
+    <!-- Include navigation -->
+
+    <!-- Blog Hero Section -->
+    <section class="relative h-[400px] overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="../images/blog-hero.jpg" alt="Blog" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70"></div>
+        </div>
+        <div class="container mx-auto px-4">
+            <div class="relative h-[400px] flex flex-col justify-center text-white max-w-2xl">
+                <h1 class="text-4xl font-bold mb-4">Plant Care Blog</h1>
+                <p class="text-xl opacity-90">Tips, tricks, and inspiration for plant parents</p>
+                <div class="mt-8">
+                    <form class="flex gap-4 bg-white/10 backdrop-blur-md p-2 rounded-lg">
+                        <input type="search" placeholder="Search articles..." 
+                               class="flex-1 px-4 py-2 rounded-md bg-white/10 text-white placeholder-white/60 border border-white/20 focus:outline-none focus:border-white">
+                        <button class="bg-accent hover:bg-secondary px-6 py-2 rounded-md transition-colors duration-300">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Posts -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12">Featured Posts</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Card -->
+                <article class="bg-white rounded-lg shadow-sm overflow-hidden group hover:shadow-lg transition-shadow duration-300">
+                    <img src="../images/blog1.jpg" alt="Blog Post" 
+                         class="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-4 space-x-4">
+                            <span class="bg-accent/10 text-accent px-3 py-1 rounded-full">Plant Care</span>
+                            <span><i class="far fa-calendar mr-2"></i>Mar 15, 2024</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">
+                            <a href="#" class="hover:text-secondary transition-colors duration-300 line-clamp-2">10 Tips for Happy Indoor Plants</a>
+                        </h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">Learn the essential tips for keeping your indoor plants thriving...</p>
+                        <a href="#" class="inline-flex items-center text-secondary hover:text-accent transition-colors duration-300">
+                            Read More <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+                        </a>
+                    </div>
+                </article>
+                <!-- Add more blog cards -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories and Search -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Main Content -->
+                <div class="lg:col-span-3">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Blog Posts -->
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside>
+                    <!-- Search -->
+                    <div class="bg-gray-50 p-6 rounded-lg mb-8">
+                        <h3 class="font-semibold mb-4">Search</h3>
+                        <form class="flex">
+                            <input type="text" placeholder="Search posts..." class="flex-1 px-4 py-2 rounded-l-lg border-0">
+                            <button class="bg-secondary text-white px-4 rounded-r-lg hover:bg-accent transition">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="font-semibold mb-4">Categories</h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="#" class="flex justify-between hover:text-secondary">
+                                    <span>Plant Care</span>
+                                    <span class="text-gray-500">12</span>
+                                </a>
+                            </li>
+                            <!-- Add more categories -->
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Include footer -->
+    <script src="../js/main.js"></script>
+</body>
+</html> 
